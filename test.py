@@ -1,6 +1,6 @@
 import albumentations as A
 import albumentations.pytorch.transforms
-from terrain_segmentation.datamodules.default_datamodule import DefaultDatamodule
+from driving_surfaces_segmentation.datamodules.default_datamodule import DefaultDatamodule
 
 augmentations = A.Compose([
             A.HorizontalFlip(p=0.5),

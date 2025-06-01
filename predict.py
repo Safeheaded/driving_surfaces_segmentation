@@ -1,7 +1,7 @@
 import torch
 import matplotlib.pyplot as plt
-from terrain_segmentation.models.default_model import DefaultSegmentationModel
-from terrain_segmentation.datasets.default_dataset import DefaultDataset
+from driving_surfaces_segmentation.models.default_model import DefaultSegmentationModel
+from driving_surfaces_segmentation.datasets.default_dataset import DefaultDataset
 
 def main():
     model = DefaultSegmentationModel.load_from_checkpoint('./trained_models/best_model.ckpt', num_classes=1, T_MAX=16*112)

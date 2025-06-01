@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from lightning.pytorch import Trainer
-from terrain_segmentation.datamodules.default_datamodule import DefaultDatamodule
-from terrain_segmentation.models.default_model import DefaultSegmentationModel
+from driving_surfaces_segmentation.datamodules.default_datamodule import DefaultDatamodule
+from driving_surfaces_segmentation.models.default_model import DefaultSegmentationModel
 import os
 from lightning.pytorch.callbacks import ModelCheckpoint
 from lightning.pytorch.loggers import NeptuneLogger
@@ -9,7 +9,7 @@ from lightning.pytorch.loggers import NeptuneLogger
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 # that import is required to stop displaying neptune double value errors
-import terrain_segmentation.logging.logging
+import driving_surfaces_segmentation.logging.logging
 from datetime import datetime
 
 load_dotenv()
