@@ -18,9 +18,9 @@ def main():
 
     neptune_project_name = os.getenv('NEPTUNE_PROJECT_NAME')
     neptune_api_key = os.getenv('NEPTUNE_API_TOKEN')
-    EPOCHS = 3000
-    BATCH_SIZE = 32
-    T_MAX = EPOCHS * 344
+    EPOCHS = 100
+    BATCH_SIZE = 4
+    T_MAX = 50
     learning_rate = 2e-4
 
     if neptune_project_name and neptune_api_key:
@@ -57,7 +57,7 @@ def main():
     data_module = DefaultDatamodule(batch_size=BATCH_SIZE)
 
 
-    model = DefaultSegmentationModel(num_classes=1, T_MAX=T_MAX, learning_rate=learning_rate)
+    model = DefaultSegmentationModel(num_classes=7, T_MAX=T_MAX, learning_rate=learning_rate)
 
     trainer = Trainer(max_epochs=EPOCHS, accelerator='gpu', callbacks=[checkpoint_callback], logger=neptune_logger)
     trainer.fit(model=model, datamodule=data_module)

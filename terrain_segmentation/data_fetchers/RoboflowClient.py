@@ -12,7 +12,7 @@ class RoboflowClient:
         self.rf = Roboflow(api_key=self.api_key)
         
     def getDataset(self, version: str, overwrite: bool = False):
-        project = self.rf.workspace("automatic-and-robotic").project("segmentacja-terenow")
+        project = self.rf.workspace("automatic-and-robotic").project(os.getenv("ROBOFLOW_PROJECT_NAME"))
         location = os.path.join(os.getcwd(), "datasets", project.name + "--" + version)
         dataset = project.version(version).download(
             "coco-segmentation", location=location, overwrite=overwrite)

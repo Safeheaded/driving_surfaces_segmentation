@@ -23,34 +23,36 @@ class DefaultDatamodule(L.LightningDataModule):
         self.overwrite = overwrite
         self.dataset_location = Path(os.path.join(Path.cwd(), self.data_dir))
         self.google_drive_path = self.dataset_location / "pan_geodeta"
-        self.location = self.dataset_location / (os.getenv("ROBOFLOW_PROJECT_NAME") + " --" + self.version)
+        self.location = self.dataset_location / (os.getenv("ROBOFLOW_PROJECT_NAME") + "--" + self.version)
         self.test_paths = []
         self.test_paths_labels = []
 
         self.augmentations = A.Compose([
             A.HorizontalFlip(p=0.5),
             A.VerticalFlip(p=0.5),
-            # A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            # A.Normalize(mean=0.0, std=1.0),
+            A.Resize(height=256, width=256),
             A.pytorch.transforms.ToTensorV2(),
         ])
 
         self.transforms = A.Compose([
-            # A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            # A.Normalize(mean=0.0, std=1.0),
+            A.Resize(height=256, width=256),
             A.pytorch.transforms.ToTensorV2(),
         ])
 
     def prepare_data(self):
-        print('Preparing data')
-        if not self.google_drive_path.exists():
-            google_drive = GoogleDriveClient()
-            google_drive.getDataset()
+        # if not self.google_drive_path.exists():
+        #     google_drive = GoogleDriveClient()
+        #     google_drive.getDataset()
+        print(self.location)
         if not os.path.exists(self.location):
             roboflow = RoboflowClient()
             dataset = roboflow.getDataset(self.version)
             dataset_path = Path(dataset.location)
             folders = [dataset_path / Path(item.name) for item in dataset_path.iterdir() if item.is_dir()]
             handle_robflow_dataset(folders)
-            handle_google_drive_files(self.location)
+            # handle_google_drive_files(self.location)
 
 
     def setup(self, stage=None):
